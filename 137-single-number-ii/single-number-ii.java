@@ -1,23 +1,18 @@
 class Solution {
     public int singleNumber(int[] arr) {
+       int n =arr.length;
+       int first =0;
+       int second=0;
+        for(int i =0;i<n;i++){
 
-        Arrays.sort(arr);
-        int n =arr.length;
+            first = (first^arr[i]) & ~ second;
 
-        for(int i=1;i<n;i=i+3){
-
-            if(arr[i]!=arr[i-1]){
-                return arr[i-1];
-            }else if(arr[i]!=arr[i+1]){
-                return arr[i+1];
-            }
-
+            second=(second^ arr[i]) & ~first;
 
         }
 
-        return arr[n-1];
 
-
+        return first;
         
     }
 }
