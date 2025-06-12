@@ -1,24 +1,34 @@
 class Solution {
     public int[] singleNumber(int[] arr) {
+
+        int ans =0;
         int n =arr.length;
-        Arrays.sort(arr);
-        int[] ans=new int [2];
-       int  counter=0;
+        for(int i=0;i<n;i++){
 
-        for(int i=0;i<n;i=i+2){
+            ans^=arr[i];
 
-            if(i==n-1){
-          ans[counter]=arr[i];
+        }
+        
+      int temp = ans & (ans - 1);        
+int mask = ans ^ temp;            
 
-            }
-            else if(arr[i]!=arr[i+1] ){
-                ans[counter]=arr[i];
-                counter++;
-                i--;
+
+
+        int bucket1=0;
+        int bucket2=0;
+
+        for(int i=0;i<n;i++){
+              int temp1 = arr[i] & mask;
+            if(temp1 !=0){
+                bucket1^=arr[i];
+            }else{
+                bucket2^=arr[i];
 
             }
         }
-        return ans;
+        int [] answer={bucket1,bucket2};
+
+        return answer;
         
     }
 }
