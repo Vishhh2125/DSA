@@ -9,24 +9,23 @@
  * }
  */
 class Solution {
+    public static ListNode  reverse(ListNode current,ListNode pre){
+
+        if(current==null) {
+            return pre;
+        } 
+
+        ListNode post =current.next;
+        current.next=pre;
+        pre=current;
+        current=post;
+       return  reverse(current,pre);
+    } 
     public ListNode reverseList(ListNode head) {
 
-        if(head==null)  return null;
-
-        ListNode pre=null;
-        
-         ListNode current=head;
-        while(current!=null){
-            ListNode post=current.next;  // save next node refernce 
-            current.next=pre;         //pont current to the pre 
-            pre=current;                 // give pre to current
-            current=post;                   //set current to the next node 
-             
-        
-        }
-        head=pre;  //it will come to tail pointer
-
-        return head;
+          
+          head= reverse(head,null);
+          return head;
         
     }
 }
