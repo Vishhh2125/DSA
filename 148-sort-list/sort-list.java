@@ -19,14 +19,15 @@ class Solution {
 
       while(fast!=null && fast.next!=null){
         fast=fast.next.next;
-      ListNode post=slow.next;
+    //   ListNode post=slow.next;
 
-        slow.next=pre;
+        // slow.next=pre;
         pre=slow;
-        slow=post;
+        slow=slow.next;
       }
+      pre.next=null;   //breaking list into 2 parts 
 
-      ListNode  left= sort(pre);
+      ListNode  left= sort(head);
       ListNode  right=sort(slow);
 
       ListNode  ans = merge(left,right);
