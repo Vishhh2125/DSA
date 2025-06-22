@@ -16,37 +16,27 @@ class Solution {
     static Node deleteAllOccurOfX(Node head, int x) {
         // Write your code here
         
-        //condition for if the first node isthe tearget 
         
-        while(head.data==x ){
+        Node slow =head;
+        
+        Node  fast=head;
+        
+        while(fast!=null){
             
-            head=head.next;
-            if(head!=null){//this condition is to see wetaher the head.next iss null or not 
+            if(fast.data!=x){
+                int temp =slow.data;
+                slow.data=fast.data;
+                fast.data=temp;
                 
-                head.prev=null;
+                slow=slow.next;
             }
+                fast=fast.next;
         }
-        Node current=head;
-        
-        
-        while(current!=null){
-            if(current.data==x){
-                if(current.prev!=null){
-                 current.prev.next=current.next;
-
-                    
-                }
-                
-                if(current.next!=null){
-                    current.next.prev=current.prev;
-
-                }
-                
-            }
+        if(slow==head) return null;  //thhis means there are all elemnt which are key so deleet all 
+        if(slow!=null){ // if no key is there then in that case slow and fast will be null
             
-            current=current.next;
+        slow.prev.next=null;  // slow is seating on the last key so gob  to prev and cut the list 
         }
-        
         
         return head;
     }
