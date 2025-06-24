@@ -1,58 +1,44 @@
+import java.util.Stack;
+
 class MinStack {
-
-    Stack<Integer> stack;
-        Stack<Integer> minStack;
-       
-
-
+    private Stack<Long> stack;
+    private long min;
 
     public MinStack() {
-        stack=new Stack<>();
-        minStack=new Stack<>();
-        
-
-        
+        stack = new Stack<>();
     }
-    
+
     public void push(int val) {
-
-        stack.push(val);
-          if(minStack.isEmpty()){
-        minStack.push(val);
-
-          }else{
-       
-            minStack.push(Math.min(val,minStack.peek()));
-          }
-
-        
+        if (stack.isEmpty()) {
+            min = val;
+            stack.push((long) val);
+        } else if (val >= min) {
+            stack.push((long) val);
+        } else {
+            // store encoded value
+            stack.push(2L * val - min);
+            min = val;
+        }
     }
-    
+
     public void pop() {
-
-        stack.pop();
-        minStack.pop();
-        
+        long top = stack.pop();
+        if (top < min) {
+            // decode previous min
+            min = 2L * min - top;
+        }
     }
-    
+
     public int top() {
-        return stack.peek();
+        long top = stack.peek();
+        if (top >= min) {
+            return (int) top;
+        } else {
+            return (int) min;
+        }
     }
-    
+
     public int getMin() {
-       
-
-      return minStack.peek();
-
-        
+        return (int) min;
     }
 }
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack obj = new MinStack();
- * obj.push(val);
- * obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.getMin();
- */
