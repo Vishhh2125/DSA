@@ -17,8 +17,10 @@ class NumArray {
         //ans=arr[right]-arr[left-1]  it is like cumulative distribution function 
            if(left==0){
             return arr[right];
-           }
+           }else{
+
         return arr[right]-arr[left-1];
+           }
         
     }
 }
