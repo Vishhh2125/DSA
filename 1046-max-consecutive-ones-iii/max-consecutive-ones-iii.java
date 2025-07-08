@@ -9,7 +9,6 @@ class Solution {
             if(arr[j]==0) zero++;
 
             if(zero>k){
-                  max=Math.max(max,j-i);
 
                   while(zero>k){
                     if(arr[i]==0) zero--;
@@ -20,10 +19,10 @@ class Solution {
             }
 
 
-           if(j==n-1){
-                              max=Math.max(max,j-i+1);
+           
+                          max=Math.max(max,j-i+1);
 
-           }
+           
 
         }
 
