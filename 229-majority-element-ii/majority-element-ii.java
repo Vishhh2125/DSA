@@ -28,8 +28,10 @@ class Solution {
         }
 
         List<Integer> ans = new ArrayList<>();
-        if (freq1 > arr.length / 3) ans.add(major1);
-        if (freq2 > arr.length / 3 && !major2.equals(major1)) ans.add(major2);
+
+
+        if (freq1 > arr.length /3) ans.add(major1);
+        if (freq2 > arr.length /3) ans.add(major2);
 
         return ans;
     }
