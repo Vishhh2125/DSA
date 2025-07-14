@@ -1,44 +1,48 @@
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
 
-        int i =m-1;
-        int j =n-1;
-        int current=n+m-1;
+        int k =m+n-1;
+      int   i=m-1;
+       int  j=n-1;
+
+       while(i>=0 && j>=0){
+
+        if(nums1[i]>=nums2[j]){
+            nums1[k]=nums1[i];
+            i--;
+            
+        }else{
+            nums1[k]=nums2[j];
+            j--;
+        }
+        k--;
+
+       }
+
+       if(i<0){
+        //nums1 ended copy nums2
+
+        while(j>=0){
+            nums1[k]=nums2[j];
+            k--;
+            j--;
+        }
 
 
-        while(i>=0 && j>=0){
-          
+        if(j<0){
+            // nums2 ended copy nums1
 
-            if(nums1[i]>nums2[j]){
-                nums1[current]=nums1[i];
+            while(i>=0){
+                nums1[k]=nums1[i];
+                k--;
                 i--;
-                current--;
-            }else if(nums1[i]<=nums2[j]){
-             nums1[current]=nums2[j];
-             j--;
-             current--;
-
-
-            }
-
-          
-        }
-
-        if(i<0){
-            //copy all form j wala array 
-
-            for(int k =current;k>=0;k--){
-                nums1[k]=nums2[j];
-                j--;
             }
         }
-        // else if(j<0){
-        //     for(int m=current;)
-
-        // }
+       }
 
 
-        
+
+
         
     }
 }
