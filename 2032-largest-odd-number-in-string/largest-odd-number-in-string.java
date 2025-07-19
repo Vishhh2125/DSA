@@ -2,22 +2,29 @@ class Solution {
     public String largestOddNumber(String num) {
 
 
-        StringBuilder str = new StringBuilder(num);  // ✅ correct spelling
+        StringBuilder str = new StringBuilder(num);  
 
+          int i;
+        for( i=str.length()-1;i>=0;i--){
+          
+          if((str.charAt(i)-'0')%2==1){
+            break;
 
-        for(int i=str.length()-1;i>=0;i--){
-            char ch= str.charAt(i);
+          }
 
-            if((ch-'0')%2== 1){
-                break;
-            }else{
-
-                str.deleteCharAt(i);
-                
-            }
+           
         }
 
-        return str.toString();
+        String string= str.toString();
+
+
+        if(i<0){
+            return "";
+        }
+
+        string=string.substring(0,i+1);
+
+        return string;
         
     }
 }
