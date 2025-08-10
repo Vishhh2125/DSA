@@ -1,32 +1,59 @@
-import java.util.*;
+import java.util.AbstractMap;
+
 
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
 
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer,Integer> map= new HashMap<>();
 
-        for (int num : nums) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
+        // ArrayList<Integer>  ans= new ArrayList<>();
+
+        for(int i=0;i<nums.length;i++){
+
+            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+
+            
         }
 
-        PriorityQueue<Map.Entry<Integer, Integer>> minHeap =
-            new PriorityQueue<>((a, b) -> a.getValue() - b.getValue()); // min heap by frequency
+        Set<Integer> keyList= map.keySet();
 
-        for (Integer key : map.keySet()) {
-            minHeap.add(new AbstractMap.SimpleEntry<>(key, map.get(key)));
+         PriorityQueue<Map.Entry<Integer, Integer>> maxHeap =
+            new PriorityQueue<>((a, b) -> a.getValue() - b.getValue());
 
-            if (minHeap.size() > k) {
-                minHeap.poll();
+
+        for(Integer key : keyList ){
+
+            maxHeap.add( new AbstractMap.SimpleEntry<>(key,map.get(key)));
+
+            if(maxHeap.size()>k){
+                maxHeap.poll();
             }
+
+
+
+                 
         }
 
-        int[] ans = new int[minHeap.size()];
-        int i = 0;
+         
 
-        while (!minHeap.isEmpty()) {
-            ans[i++] = minHeap.poll().getKey(); // get the number (key)
+         int [] ans = new int [maxHeap.size()];
+   
+           int end=maxHeap.size();
+        for(int i=0;i<end;i++){
+
+
+            ans[i]=maxHeap.peek().getKey();
+            maxHeap.poll();
+
+
+            
+
         }
 
         return ans;
+
+
+
+        
     }
 }
