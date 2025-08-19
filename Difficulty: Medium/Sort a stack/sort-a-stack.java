@@ -1,39 +1,50 @@
 /*Complete the function below*/
 class GfG {
     
-    public static  Stack<Integer> function(Stack<Integer> s ,Stack<Integer> ans){
+    public static void insert(Stack<Integer> s ,int x){
+        
+        if(s.isEmpty() || x>=s.peek()){
+            
+            s.push(x);
+            
+        }else{
+            int top=s.peek();
+            s.pop();
+            
+            
+            insert(s,x);
+            s.push(top);
+        }
         
         
-        if(s.isEmpty())  return ans;
         
+    }
+    
+    public static  void  function(Stack<Integer> s ){
         
-        int top =s.peek();
+        //it just empry the stack util last and store eeach elemment at each level in function 
+        
+        if(s.isEmpty())  return ;
+        
+        int top=s.peek();
         s.pop();
         
         
-        if(ans.isEmpty()){
-            ans.push(top);
-        }else{
-            
-            while(!ans.isEmpty() && top<ans.peek()){
-                
-                s.push(ans.peek());
-                ans.pop();
-                
-                
-                
-            }
-            
-            ans.push(top);
-        }
+        function(s);
         
-        return function(s,ans);
+        insert(s,top);
+        
+       
+        
+      
     }
     public Stack<Integer> sort(Stack<Integer> s) {
         // add code here.
         
         
-        Stack<Integer> ans= new Stack<>();
-        return function(s,ans);
+        // Stack<Integer> ans= new Stack<>();
+      function(s);
+      
+      return s;
     }
 }
