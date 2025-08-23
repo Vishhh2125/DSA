@@ -1,44 +1,33 @@
 // User function Template for Java
 
 class Solution {
+    
+    public static void solution(int n ,String output , List<String> ans){
+       
+      if(output.length()==n) {
+          
+          if(!output.contains("11")){
+          ans.add(output);
+             
+          }
+          
+          return ;
+          
+      }
+      
+      solution(n,output+"0",ans);
+      solution(n,output+"1",ans);
+        
+        
+    }
     public static List<String> generateBinaryStrings(int n) {
         // code here
         
+        List<String>  ans=  new ArrayList<>();
         
-        ArrayList<String>  ans= new ArrayList<>();
-        
-        double total =  Math.pow(2,n);
-        
-        for(int i=0;i<total;i++){
-            
-        StringBuilder str= new StringBuilder("");
-            boolean flag=true;
-            int last =-1; //for intilaise it should not be equalt to one or zero 
-            for(int j=n-1;j>=0;j--){
-                //this si for how many size to generate 
-                
-                int bit = (i>>j) & 1;
-                
-                str.append(bit);
-                
-                if(bit==1 && last==1)  {
-                    flag=false;
-                    
-                
-                }
-                
-                last=bit;
-                
-                
-            }
-            
-            
-            if(flag==true){
-                  ans.add(str.toString());
-            }
-        }
-        
+        solution(n,"",ans);
         
         return ans;
+        
     }
 }
