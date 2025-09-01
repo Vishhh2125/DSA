@@ -1,34 +1,32 @@
 class Solution {
 
-    public static void solution(List<Integer> input ,List<Integer>  output,List<List<Integer>> ans){
+    public static void solution(int index,int[] input ,List<Integer>  output,List<List<Integer>> ans){
 
-        if(input.size()==0){
+        if(input.length==index){
 
-            ans.add(output);
+            ans.add(new ArrayList<>(output));
             return ;
         }
 
-        int num=input.get(0); //extract first element 
-            input.remove(0);//remove first element 
+        
+ 
+        output.add(input[index]);//include the number 
 
-        ArrayList<Integer>  output1=new ArrayList<>(output);
-        output1.add(num); 
+        solution(index+1,input,output,ans);//added num for combination
+          output.remove(output.size()-1) ; //remove from teh last of the  list (backtrack)
+        solution(index+1,input,output,ans);//not added num
 
-         ArrayList<Integer>  output2=new ArrayList<>(output);
 
-        solution(new ArrayList<>(input),output1,ans);//added num for combination
-        solution(input,output2,ans);//not added num
+
+
+        
         
     }
     public List<List<Integer>> subsets(int[] arr) {
 
         List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> input=new ArrayList<>();
-          for(int num:arr){
-            input.add(num);
-
-          }
-        solution(input,new ArrayList<>(),ans);
+     
+        solution(0,arr,new ArrayList<>(),ans);
 
         return ans;
         
