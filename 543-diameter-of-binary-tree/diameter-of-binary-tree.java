@@ -14,37 +14,34 @@
  * }
  */
 class Solution {
-
-     public static  int height(TreeNode current){
-
-        if(current==null)  return 0;
+     //so basically solution wil retyurn the height ans diameter max at the current node 
+    public static int[] solution(TreeNode current){
 
 
-        return 1+Math.max(height(current.left),height(current.right));
-    }
+        if(current==null)  return new int[]{0,0};
 
-    public static int solution(TreeNode current,int max){
+        int [] left= solution(current.left);
+        int [] right= solution(current.right);
 
-        if(current==null)  return max;
+        int [] ans = new int [2];
+         //intiliase height
+        ans[0]=1+Math.max(left[0],right[0]);
 
+        // diamater is left+right height 
 
-        int path = height(current.left) + height(current.right);
+        int diameter=left[0]+right[0];
 
-        int max1= solution(current.left,Math.max(max,path));
+        ans[1]= Math.max(diameter,Math.max(left[1],right[1]));
 
-        int max2= solution(current.right,Math.max(max,path));
+        return ans;
 
-        return Math.max(max1,max2);
-
-
+        
     }
     public int diameterOfBinaryTree(TreeNode root) {
 
-        return solution(root,0);
+        int [] ans = solution(root);
 
-
-
-
+        return ans[1];
         
     }
 }
