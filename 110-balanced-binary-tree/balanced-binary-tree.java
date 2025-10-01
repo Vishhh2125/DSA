@@ -29,9 +29,8 @@ class Solution {
 
         int diff= Math.abs(height(root.left)-height(root.right));
 
-        if(diff<=1 && isBalanced(root.left) && isBalanced(root.right))  return true;
+        return diff<=1 && isBalanced(root.left) && isBalanced(root.right) ;
 
-        return false;
         
     }
 }
