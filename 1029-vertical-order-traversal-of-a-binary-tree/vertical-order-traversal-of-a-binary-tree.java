@@ -14,54 +14,74 @@
  * }
  */
 class Solution {
+    public static class  Pair{
 
-    public static void solution(TreeNode current,int level,int row,TreeMap<Integer,List<Pair>> map){
-        if(current==null)  return ;
-
-        if(map.containsKey(level)){
-            map.get(level).add(new Pair(current.val,row));
-        }else{
-           List<Pair> list= new ArrayList<>();
-           list.add(new Pair(current.val,row));
-            map.put(level,list);
-        }
-
-        solution(current.left,level-1,row+1,map);
-        solution(current.right,level+1,row+1,map);
-
-
-    }
-     static class Pair {
-          int val;
+        int val;
         int row;
-        Pair(int val, int row) {
-            this.val = val;
-            this.row = row;
+
+        Pair(int val,int row){
+            this.row=row;
+            this.val=val;
         }
+    }
+    public static void solution(TreeNode current,int col,int row,TreeMap<Integer,List<Pair>>map){
+        if(current==null)  return;
+        
+
+
+          //left
+        solution(current.left,col-1,row+1,map);
+
+
+        //print 
+        if(map.containsKey(col)){
+            //if column key already present 
+            map.get(col).add(new Pair(current.val,row));
+        }else{
+             // if column key nor present cerate arraylist instance and add it with value 
+            List<Pair> list= new ArrayList<>();
+             list.add( new Pair(current.val,row));
+
+             map.put(col,list);
+        }
+
+
+        // right 
+        solution(current.right,col+1,row+1,map); //right 
     }
     public List<List<Integer>> verticalTraversal(TreeNode root) {
+     
 
-        TreeMap<Integer,List<Pair>> map = new TreeMap<>();
-        List<List<Integer>> ans= new ArrayList<>();
+     List<List<Integer>> ans = new ArrayList<>();
+
+     TreeMap<Integer,List<Pair>> map = new TreeMap<>();
+
+
+     solution(root,0,0,map);
+
+
+     for(Integer key :map.keySet()){
+        
+
+        List<Pair> list  = map.get(key);
+        Collections.sort(list,(a,b)->{
             
-        solution(root,0,0,map);
+            if(a.row==b.row)  return a.val-b.val;
+            else  return a.row-b.row;
+        });
 
-        for(Integer key: map.keySet()){
-            List<Integer> ans_list= new ArrayList<>();
-            List<Pair> list=map.get(key);
-          Collections.sort(list,(a,b)->{
-            if(a.row==b.row) return a.val-b.val;
-            else return  a.row-b.row;
-          });
+          List<Integer> ans_sublist = new ArrayList<>();
+        for(Pair p:list){
+          
+          ans_sublist.add(p.val);
 
-
-          for(Pair p : list) ans_list.add(p.val);
-
-            ans.add(ans_list);
-           
         }
 
-     return ans ;
+        ans.add(ans_sublist);
+     }
+
+        
+    return ans ;
         
     }
 }
