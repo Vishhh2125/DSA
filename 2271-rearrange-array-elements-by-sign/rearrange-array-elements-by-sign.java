@@ -1,24 +1,22 @@
 class Solution {
-    public int[] rearrangeArray(int[] arr) {
+    public int[] rearrangeArray(int[] nums) {
 
-        int n =arr.length;
+        int []ans = new int[nums.length];
+        int i =0;
+        int j =1;
+        for(int c =0;c<nums.length;c++){
 
-        int[] ans= new int [n];
-
-         int i=0;
-         int j =1;
-        for(int current =0;current<n;current++){
-
-           if(arr[current]>0 && i<n){
-            ans[i]=arr[current];
-            i=i+2;
-
-           }else if(arr[current]<0 && j<n){
-            ans[j]=arr[current];
-            j=j+2;
-           }
+            if(nums[c]>0){
+                ans[i]=nums[c];
+                i+=2;
+            }else{
+                ans[j]=nums[c];
+                j+=2;
+            }
 
         }
-       return ans; 
+
+        return ans ;
+        
     }
 }
