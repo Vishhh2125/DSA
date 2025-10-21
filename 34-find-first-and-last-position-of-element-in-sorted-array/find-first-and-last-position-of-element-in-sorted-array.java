@@ -1,51 +1,70 @@
 class Solution {
     public int[] searchRange(int[] arr, int target) {
-        int n=arr.length;
-        int lower=n+1;//give biggest than array  so that it can swap at companriosn of min
-        int upper=n;//give any value as we are finding upper bound 
 
-        int hi=n-1;
-        int lo=0;
+        if(arr.length==0)  return new int [] {-1,-1};
 
+        int [] ans = new int [2];
+
+        int lo =0;
+        int hi=arr.length-1;
+        int first=Integer.MAX_VALUE;
+        int last=Integer.MIN_VALUE;
+
+        //lest find teh firsst occurance that si near lower bound
         while(lo<=hi){
-            int mid=lo+((hi-lo)/2);
+            
+            int mid = lo+ (hi-lo)/2;
 
             if(arr[mid]==target){
-                //lower bound but only at if value found or else -1 that is why fiest is 
-                //     given mid when equal 
-                lower=Math.min(lower,mid);
+                first =Math.min(first,mid);
                 hi=mid-1;
-                 }
-            else if(arr[mid]<target){
+
+            }else if (arr[mid]>target){
+                hi=mid-1;
+
+            }else{
                 lo=mid+1;
+
             }
-            else {
+
+        }
+
+        //checck if the lo is really a target or target is missing and we are getting nearest eleemnt 
+        
+       
+
+
+
+        //for last occurance 
+
+        lo=0;
+        hi=arr.length-1;
+
+         while(lo<=hi){
+            
+            int mid = lo+ (hi-lo)/2;
+
+            if(arr[mid]==target){
+                last=Math.max(last,mid);
+                lo=mid+1;
+
+            }else if (arr[mid]>target){
                 hi=mid-1;
 
-                
-            }
-        }
-        hi=n-1;
-        lo=0;
+            }else{
+                lo=mid+1;
 
-        while (lo <= hi) {
-                int mid = lo + (hi - lo) / 2;
-
-                if (arr[mid] > target) {
-                    upper = mid; // Possible upper bound found
-                    hi = mid - 1; // Move left
-                } else {
-                    lo = mid + 1; // Move right
-                }
             }
-        if(lower==n+1){
-            int [] ans = {-1,-1};
-           return ans;
+
         }
-        else{
+
+      if(first==Integer.MAX_VALUE)  first =-1;
+
+      if(last==Integer.MIN_VALUE) last=-1;
+
+
+
+        return new int [] {first,last};
         
-            int [] ans ={lower,upper-1};
-            return ans;
-        }
     }
 }
