@@ -1,30 +1,49 @@
 class Solution {
-
-
     public String reverseWords(String s) {
 
+        
 
-        String []arr = s.trim().split("\\s+");
-         
-         StringBuilder ans= new StringBuilder();
+        
 
-        for(int i =0;i<arr.length;i++){
+     ArrayList<String> list = new ArrayList<>();
+     int j =0;
+    for(int i=0;i<s.length();i++){
 
-            StringBuilder temp  = new StringBuilder(arr[i]);
+       if(s.charAt(i)==' ' ){
+          if(i>j){
+            //valid string 
+         list.add(s.substring(j,i));
 
-            if(i!=0){
-                ans.append(" ");
+          }
 
-            }
+          while(i<s.length() && s.charAt(i)==' ') i++;
 
-            ans.append(temp.reverse());
+          j=i;
+        
+        
+       }
+    }
 
-            
+    if(j<s.length()){
+        list.add(s.substring(j));
+    }
+
+    Collections.reverse(list);
+     StringBuilder ans = new StringBuilder();
+
+    for(String sub :list){
+
+        if(ans.length()>0){
+            ans.append(" ");
         }
+        ans.append(sub);
+        
 
-        ans=ans.reverse(); //reverse qagain 
+    }
 
-        return ans.toString() ;
+    return ans.toString();
+
+     
         
     }
 }
