@@ -1,70 +1,42 @@
 class Solution {
     public void setZeroes(int[][] arr) {
 
+        int m =arr.length;
+        int n =arr[0].length;
 
-    // the row== arr[..][0]
-    //the column== arr[0][...]
+        int [] row= new int [m];
+        int [] col= new int [n];
 
-     boolean col=true;
-     boolean row=true;
 
-    for(int i=0;i<arr.length;i++){
-        for(int j =0;j<arr[0].length;j++){
+        for(int i =0;i<m;i++){
+            for(int j=0;j<n;j++){
 
-            if(arr[i][j]==0){
-
-                if(i==0){
-                    //column have to be zero 
-                    row=false;
+                if(arr[i][j]==0){
+                    row[i]=1;
+                    col[j]=1;
                 }
-                 if(j==0){
-                    col=false;
-                }else{
-
-                arr[i][0]=0;
-                arr[0][j]=0;
-                }
-
-                
-                
             }
-
-
         }
-    }
 
-    for(int i=1;i<arr.length;i++){
-        for(int j=1;j<arr[0].length;j++){
+        for(int i =0;i<m;i++){
 
-            if(arr[0][j]==0 || arr[i][0]==0){
-                arr[i][j]=0;
+            if(row[i]==1){
+                //make that row to zero 
+                for(int j=0;j<n;j++){
+                    arr[i][j]=0;
+                }
             }
-
-           
-
-
-
         }
-    }
 
-     if(col==false){
-        //zero whole column by keeping j==0
-                for(int i=0;i<arr.length;i++){
-                      arr[i][0]=0;
+        for(int j=0;j<n;j++){
 
+            if(col[j]==1){
+                //make that row to zero 
+                for(int i=0;i<m;i++){
+                    arr[i][j]=0;
                 }
             }
-       
-
-       if(row==false){
-        //zero whole column by keeping i==0
-                for(int i=0;i<arr[0].length;i++){
-                      arr[0][i]=0;
-
-                }
-            }
-
-
+        }
         
     }
 }
