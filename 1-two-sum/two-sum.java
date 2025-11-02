@@ -1,32 +1,21 @@
 class Solution {
     public int[] twoSum(int[] arr, int target) {
 
-        int n =arr.length;
-        int[] ans=new int[2];
+        HashMap<Integer ,Integer> map = new HashMap<>();
+         int [] ans = new int[2];
+        for(int i =0;i<arr.length;i++){
+             
+           if(map.containsKey(target-arr[i])){
 
-        // here we knoow that arr[i]+arr[j]=target;
-        //target-arr[j]=arr[i](we will stire th the first occurance of every number in hashmap )
+              ans[0]=i;
 
-        Map<Integer,Integer> map= new HashMap<>();
+              ans[1]=map.get(target-arr[i]);
+            
 
-
-        for(int i=0;i<n;i++){
-               //condition checking 
-            if(map.containsKey(target-arr[i])){
-                ans[0]=map.get(target-arr[i]);
-                ans[1]=i;
-
-                break;
-
-                
-            }
-
-            if(!map.containsKey(arr[i])){
-                map.put(arr[i],i);
-            }
+           }
+           map.put(arr[i],i);
         }
-
-        return ans;
+       return ans ;
         
     }
 }
