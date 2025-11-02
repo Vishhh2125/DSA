@@ -1,22 +1,34 @@
 class Solution {
-    public int[] rearrangeArray(int[] nums) {
 
-        int []ans = new int[nums.length];
-        int i =0;
+    public void swap ( int[]arr ,int i ,int j ){
+        int temp =arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+    public int[] rearrangeArray(int[] arr) {
+
+        int i=0;
         int j =1;
-        for(int c =0;c<nums.length;c++){
 
-            if(nums[c]>0){
-                ans[i]=nums[c];
-                i+=2;
+        int c=0;
+        int [] ans= new int[arr.length];
+
+        while(c<arr.length){
+
+            if(arr[c]>0){
+                //swap with positive
+               ans[i]=arr[c];
+                i=i+2;
+
+
             }else{
-                ans[j]=nums[c];
-                j+=2;
+               ans[j]=arr[c]; 
+                j=j+2;
             }
-
+            c++;
         }
 
-        return ans ;
+        return ans;
         
     }
 }
