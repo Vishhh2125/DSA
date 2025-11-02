@@ -1,34 +1,34 @@
 class Solution {
-    public void rotate(int[][] arr) {
 
-        int n =arr.length;
-        int m =arr[0].length;
+    public void rotate(int[][] arr ) {
 
-        //  transpose + reverse each row == roatate 90
+    int m = arr.length ;
+    int n = arr[0].length;
 
-        //transpose only when matix is nxn
-        for(int i=0;i<n;i++){
-            for(int j =0;j<=i;j++){
+    for(int i=0;i<m;i++){
+        for(int j =i+1;j<n;j++){
+            //transpose 
 
-               int temp = arr[i][j];
-                arr[i][j] = arr[j][i];
-               arr[j][i] = temp;
-
-
-            }
+            int temp=arr[i][j];
+            arr[i][j]=arr[j][i];
+            arr[j][i]=temp;
+            
         }
+    }
+
+    //revser seach row 
+
+    for(int i=0;i<m;i++){
+        for(int j =0;j<n/2;j++){
+
+
+           int temp=arr[i][j];
+            arr[i][j]=arr[i][n-j-1];
+            arr[i][n-j-1]=temp;
 
 
 
-        //    reverse the values of each rows 
-          for(int i=0;i<n;i++){
-            for(int j =0;j<m/2;j++){
-
-             int temp =arr[i][m-j-1];
-             arr[i][m-1-j]=arr[i][j];
-             arr[i][j]=temp;
-
-            }
+        }
         }
         
     }
