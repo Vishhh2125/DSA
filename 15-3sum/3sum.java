@@ -1,56 +1,43 @@
 class Solution {
     public List<List<Integer>> threeSum(int[] arr) {
+        Arrays.sort(arr);
+        int n = arr.length;
 
-            Arrays.sort(arr);
-          List<List<Integer>> result= new ArrayList<>();
 
-          int sum=0;
-            for(int i=0;i<arr.length-2;i++){
+        List<List<Integer>> output= new ArrayList<>();
 
-                if(i>0 && arr[i]==arr[i-1] )  continue;
+        for(int i=0;i<n-2;i++){
+             while(i>0 && i<n-2 &&arr[i]==arr[i-1]) i++;
+            int j=i+1;
+            int k=n-1;
 
-                int j =i+1;
-                int k =arr.length-1;
+            while(j<k){
 
-                while(j<k){
-
-                    
-                
-                sum=arr[j]+arr[k]+arr[i];
+                while(j>i+1 && j<k && arr[j]==arr[j-1])  j++;
+                while(k>n-1 && j<k && arr[k]==arr[k+1]) k--;
+                  if(j>=k) break;
+                int sum =arr[i]+arr[k]+arr[j];
 
                 if(sum==0){
-
-                    List<Integer> ans= new ArrayList<>();
-
+                    List<Integer> ans = new ArrayList<>();
+                    ans.add(arr[i]);
                     ans.add(arr[j]);
-                     ans.add(arr[k]);
-                      ans.add(arr[i]);
+                    ans.add(arr[k]);
 
-                      result.add(ans);
-                      j++;
-                      k--;
+                    output.add(ans);
 
-                      while(j<k && arr[j]==arr[j-1])  j++;
-                     while( j<k &&arr[k]==arr[k+1]  )  k--;
-
-
+                    j++;
+                    k--;
                 }else if(sum>0){
                     k--;
-                    
                 }else{
                     j++;
                 }
-
-                
-
-                
             }
+        }
 
-                
-            } 
 
-        return result;
-
+        return output ;
         
     }
 }
