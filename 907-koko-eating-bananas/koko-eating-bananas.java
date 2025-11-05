@@ -1,38 +1,44 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
 
-        int n =piles.length;
         int lo=1;
-         int hi=0;
-         
-        for(int i=0;i<n;i++){
+        int hi =piles[0];
 
-          hi=  Math.max(hi,piles[i]);
-
+        for(int pile:piles ){
+            hi=Math.max(pile,hi);
         }
-
+         int ans=0;
         while(lo<=hi){
-            int mid = lo+(hi-lo)/2;
+
+            int mid = lo+ (hi-lo)/2; // mid is my choosen answer 
+
             int hrs=0;
-            for(int i=0;i<n;i++){
 
-                hrs+=  Math.ceil((double)piles[i]/mid);
+            for(int i=0;i<piles.length;i++ ){
 
+                hrs+=Math.ceil((double)piles[i]/mid);
             }
+
 
             if(hrs<=h){
-                //this is the ans but teherf any be other an in left go left 
 
-                hi=mid-1;
+              //this can be one of  teh ans but move left to get teh ans 
+
+              ans=mid;
+              hi=mid-1;
+
+              
+
             }else{
-
-                //its grestes than the liit just to less speed increase speed 
-                lo=mid+1;
+               lo=mid+1;
             }
+
+
+
         }
 
+        return ans;
 
-        return lo;
         
     }
 }
