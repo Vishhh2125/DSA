@@ -1,54 +1,60 @@
 class Solution {
 
-    void reverse(int [] arr,int i ,int j){
-        int lo=i;
-        int hi=j;
-        while(lo<hi){
+    public void reverse(int [] arr,int i ,int j ){
 
-            int temp =arr[lo];
-            arr[lo]=arr[hi];
-            arr[hi]=temp;
-            lo++;
-            hi--;
-
+        while(i<j){
+            int temp =arr[i];
+            arr[i]=arr[j];
+            arr[j]=temp;
+            i++;
+            j--;
         }
     }
     public void nextPermutation(int[] arr) {
-        int index=-1;
-        for(int i=arr.length-2;i>=0;i--){
-           
 
-           if(arr[i]<arr[i+1]){
-            index=i;
-            break;
+            int n =arr.length;
+        int pivot_index=-1;
 
-           }
 
-        }
-        //if ther is no index mean the array is in dec order reverse teh whle array to get te smallest 
+        for(int i=n-2;i>=0;i--){
 
-        if(index==-1){
-            //revere all array 
-            reverse(arr,0,arr.length-1);
-            return ;
-        }
-        
-
-        for(int i=arr.length-1;i>index;i--){
-            if(arr[i]>arr[index]){
-                int temp = arr[i];
-                arr[i] = arr[index];
-                arr[index] = temp;
+            if(arr[i]<arr[i+1]) {
+                pivot_index=i;
                 break;
             }
+
+
         }
 
-        reverse(arr,index+1,arr.length-1);
 
-        
+        if(pivot_index==-1){
+            //means no pivot so rever full arr 
+            reverse(arr,0,n-1);
+            return ;
+        }
 
 
-        
+         int i=n-1;
+        for(;i>=pivot_index;i--){
+
+            if(arr[i]>arr[pivot_index]) break;
+        }
+
+
+        int temp=arr[i];
+        arr[i]=arr[pivot_index];
+        arr[pivot_index]=temp;
+
+
+        reverse(arr,pivot_index+1,n-1);
+
+
+
+
+
+
+
+
         
     }
 }
