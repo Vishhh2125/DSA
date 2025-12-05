@@ -10,48 +10,91 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        if(l1.val==0 && l1.next==null &&l2.val==0 && l2.next==null){
-            return new ListNode(0);
-        }
-        ListNode head=new ListNode(0);
-        ListNode tail=head;
-         int carry =0;
-          
-        while(l1!=null || l2!=null  ){
-            int num1=0;
-            int num2=0; 
-            if(l1!=null){
-
-                num1=l1.val;
-                l1=l1.next;
-
-            }
-
-            if(l2!=null){
-                 num2=l2.val;
-                l2=l2.next;
-
-            }
-
-            int total = num1+num2+carry;
-             carry=0;//reset carry 
-            int last_digit=total%10;
-            if(total/10!=0){
-                carry=total/10;
-
-            }
-             
-             tail.next=new ListNode(last_digit);
-            tail= tail.next;
-
-        }
-
-        if(carry!=0){
-            tail.next=new ListNode(carry);
-        }
-
-
-        return head.next;
         
+
+           int carry=0;
+         
+           ListNode temp1=l1;
+           ListNode temp2=l2;
+            ListNode ans= new ListNode();
+            ListNode current=ans;
+
+           while(temp1!=null && temp2!=null){
+
+             int sum=temp1.val+temp2.val;
+
+             if(carry>0){
+                sum+=1;
+                carry=0;
+             }
+
+             if(sum>9){
+                sum=sum%10; //extract last dogit 
+                carry=1;
+             }
+             current.next= new ListNode(sum);
+             current=current.next;
+
+             temp1=temp1.next;
+             temp2=temp2.next;
+
+
+
+           }
+
+
+         
+
+            while(temp1!=null){
+
+                int sum =temp1.val;
+
+                 if(carry>0){
+                   sum+=1;
+                  carry=0;
+                }
+
+                if(sum>9){
+                sum=sum%10; //extract last dogit 
+                carry=1;
+             }
+
+            current.next= new ListNode(sum);
+            current=current.next;
+            temp1=temp1.next;
+
+
+
+            }
+
+            while(temp2!=null){
+
+                 int sum =temp2.val;
+
+                if(carry>0){
+                   sum+=1;
+                  carry=0;
+                }
+
+                if(sum>9){
+                        sum=sum%10; //extract last dogit 
+                        carry=1;
+                 }
+
+                    current.next= new ListNode(sum);
+                    current=current.next;
+                    temp2=temp2.next;
+            
+
+
+            }
+
+
+            if(carry>0){
+                current.next=new ListNode(1);
+            }
+
+            return ans.next;
+           
     }
 }
