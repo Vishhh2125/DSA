@@ -12,32 +12,68 @@
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
-        HashSet<ListNode> map = new HashSet<>();
-              ListNode temp= headA;
-           while(temp!=null){
-             
-             map.add(temp);
-             temp=temp.next;
+
+        int size1=0;
+        int size2=0;
+         
+
+         ListNode temp1=headA;
+         ListNode temp2=headB;
+
+        while(temp1!=null){
+            temp1=temp1.next;
+            size1++;
+
+        }
+
+          while(temp2!=null){
+            temp2=temp2.next;
+            size2++;
+
+        }
 
 
-           }
 
+         ListNode fast=null;
+         ListNode slow=null;
 
-           temp=headB;
-            ListNode ans= null;
+         if(size1>size2){
+            int diff=size1-size2;
 
-           while(temp!=null){
-
-            if(map.contains(temp)){
-                ans=temp;
-                break;
+            ListNode temp = headA;
+            int count=0;
+            fast=headA;
+            while(count!=diff){
+                fast=fast.next;
+                count++;
             }
-              temp=temp.next;
 
-           }
+            slow=headB;
+         }else{
+            int diff=size2-size1;
+            ListNode temp =headB;
+            fast=headB;
+             int count=0;
+            while(count!=diff){
+                fast=fast.next;
+                count++;
+            }
+            slow=headA;
+         }
+
+         while( slow!=null && fast!=null && slow!=fast){
+
+            fast=fast.next;
+            slow=slow.next;
+
+         }
+
+        
+         if(fast==slow)  return fast;
+         else return null;
 
 
-           return ans ;
+
         
     }
 }
