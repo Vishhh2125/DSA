@@ -9,89 +9,58 @@
  * }
  */
 class Solution {
-    public static ListNode sort   (ListNode head){
-
-        // if(head==null)  return null;
-    if(head.next==null)  return head;
-      ListNode fast=head;
-      ListNode slow =head;
-      ListNode pre =null;
-
-      while(fast!=null && fast.next!=null){
-        fast=fast.next.next;
-    //   ListNode post=slow.next;
-
-        // slow.next=pre;
-        pre=slow;
-        slow=slow.next;
-      }
-      pre.next=null;   //breaking list into 2 parts 
-
-      ListNode  left= sort(head);
-      ListNode  right=sort(slow);
-
-      ListNode  ans = merge(left,right);
-
-      return ans; 
-
-      
-
-    }
-
-    public static ListNode merge(ListNode head1,ListNode head2){
-
-        ListNode anshead=new ListNode(0);
-        ListNode current=anshead;
-        while(head1!=null && head2!=null){
-        if(head1.val<head2.val){
-            
-            current.next=head1;
-            current=current.next;
-            head1=head1.next;
-
-        }else{
-
-             current.next=head2;
-            current=current.next;
-            head2=head2.next;
-
-          }
-     }
-
-        if(head1==null){
-            while(head2!=null){
-                
-                current.next=head2;
-            current=current.next;
-            head2=head2.next;
-
-            }
-        }
-        if(head2==null){
-
-            while(head1!=null){
-                 current.next=head1;
-            current=current.next;
-            head1=head1.next;
-            }
-            
-
-        }
-
-
-      return anshead.next;
-        
-    }
     public ListNode sortList(ListNode head) {
 
-        if(head==null)  return null;
+
+        if(head==null)  return null ;
         if(head.next==null)  return head;
+        ListNode fast =head;
+        ListNode slow= head;
+        ListNode pre=null;
 
-        head=sort(head);
+        while(fast!=null && fast.next!=null){
+            fast=fast.next.next;
+            pre=slow;
+            slow=slow.next;
+        }
 
-        return head;
+         pre.next=null;
+        ListNode left= sortList(head);
+        ListNode right= sortList(slow);
 
-
+       return  merge(left,right);
         
+    }
+
+    public ListNode merge (ListNode left ,ListNode right ){
+
+        ListNode head = new ListNode(0);
+
+        ListNode current=head;
+
+        while(left!=null && right!=null){
+
+            if(left.val<right.val){
+                current.next=new ListNode(left.val);
+                current=current.next;
+                left=left.next;
+                
+            }else{
+                current.next= new ListNode(right.val);
+                current=current.next;
+                right=right.next;
+            }
+        }
+
+        if(left!=null){
+            current.next=left;
+        }
+
+        if(right!=null){
+            current.next=right;
+        }
+
+
+        return head.next;
     }
 }
