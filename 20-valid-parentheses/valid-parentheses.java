@@ -1,32 +1,39 @@
 class Solution {
     public boolean isValid(String s) {
-        char[] arr = s.toCharArray();
-        int n = arr.length;
-        Stack<Character> st = new Stack<>();
 
-        for (int i = 0; i < n; i++) {
-            if (arr[i] == '{' || arr[i] == '(' || arr[i] == '[') {
-                st.push(arr[i]);
-            } else {
-                if (st.isEmpty()) return false;
 
-                if (arr[i] == '}' && st.peek() != '{') {
-                    return false;
-                }
-                if (arr[i] == ')' && st.peek() != '(') {
-                    return false;
-                }
-                if (arr[i] == ']' && st.peek() != '[') {
-                    return false;
-                }
+        Deque<Character>  st= new ArrayDeque<>();
 
-                st.pop();
-            }
+
+        for(int i=0;i<s.length();i++){
+
+            if(st.isEmpty()){
+                //directly add no comparison
+
+                st.push(s.charAt(i));
+            }else if(s.charAt(i)=='(' ||
+                 s.charAt(i)=='{' ||
+                 s.charAt(i)=='['  ){
+                    //add into teh stack 
+
+                    st.push(s.charAt(i));
+             }else{
+
+                //means we have to comoare here 
+
+                  char ch = st.pop();
+                if((s.charAt(i)==')'  && ch!='(')  || (s.charAt(i)==']'  && ch!='[')  || (s.charAt(i)=='}'  && ch!='{' ) )  return false ;
+             }
+            
+            
+
+                
         }
-         if(st.isEmpty()==false) return false;
-         else{
-            return true;
-         }
-     
+
+
+        if(!st.isEmpty()) return false;
+
+        return true;
+        
     }
 }
