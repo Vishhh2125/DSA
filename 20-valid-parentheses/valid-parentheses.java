@@ -1,39 +1,31 @@
 class Solution {
     public boolean isValid(String s) {
 
+        Deque<Character> st = new ArrayDeque<>();
 
-        Deque<Character>  st= new ArrayDeque<>();
+        for (char ch : s.toCharArray()) {
 
+            // Opening brackets → push
+            if (ch == '(' || ch == '{' || ch == '[') {
+                st.push(ch);
+            } 
+            else { // Closing brackets
 
-        for(int i=0;i<s.length();i++){
+                // No opening bracket available
+                if (st.isEmpty()) return false;
 
-            if(st.isEmpty()){
-                //directly add no comparison
+                char top = st.pop();
 
-                st.push(s.charAt(i));
-            }else if(s.charAt(i)=='(' ||
-                 s.charAt(i)=='{' ||
-                 s.charAt(i)=='['  ){
-                    //add into teh stack 
-
-                    st.push(s.charAt(i));
-             }else{
-
-                //means we have to comoare here 
-
-                  char ch = st.pop();
-                if((s.charAt(i)==')'  && ch!='(')  || (s.charAt(i)==']'  && ch!='[')  || (s.charAt(i)=='}'  && ch!='{' ) )  return false ;
-             }
-            
-            
-
-                
+                // Check correct matching pair
+                if ((ch == ')' && top != '(') ||
+                    (ch == ']' && top != '[') ||
+                    (ch == '}' && top != '{')) {
+                    return false;
+                }
+            }
         }
 
-
-        if(!st.isEmpty()) return false;
-
-        return true;
-        
+        // Stack must be empty at end
+        return st.isEmpty();
     }
 }
