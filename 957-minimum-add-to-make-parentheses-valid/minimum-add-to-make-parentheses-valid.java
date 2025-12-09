@@ -7,7 +7,7 @@ class Solution {
 
         Deque <Character>   st = new ArrayDeque<>();
 
-
+         int count =0;
         for(int i=0;i<s.length();i++){
            char ch=s.charAt(i);
 
@@ -19,13 +19,13 @@ class Solution {
             if(!st.isEmpty( ) && st.peek()=='('){
                 st.pop();
             }else{
-                st.push(ch);
+                count++;
             }
            }
         }
 
 
-        return st.size();
+        return st.size()+count;
         
     }
 }
