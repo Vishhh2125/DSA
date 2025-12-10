@@ -1,51 +1,44 @@
 class StockSpanner {
 
-    // private int [] input;
-    private Stack<int []> st ;
-    private int current;
+      Deque<Pair> st;
+       int index;
+    public class Pair{
+        int val ;
+        int index;
 
-    
+       public  Pair(int val,int index){
+            this.val=val;
+            this.index=index;
+        }
+
+
+    }
+
+
+
 
     public StockSpanner() {
-        this.current=0;
-        this.st=new Stack<>();
-        
+
+        this.st= new ArrayDeque<>();
+        st.push( new Pair(Integer.MAX_VALUE,0));
+        this.index=1;
         
     }
     
     public int next(int price) {
-       
 
-        while(!st.isEmpty() && st.peek()[0]<=price){
 
+        while( price>=st.peek().val){
             st.pop();
         }
-          int ans;
-          int greatest;
-        if(st.isEmpty() ){
-
-            //means he is the most grestest element 
-
-            greatest=-1;
-          
-            
-        }else{
-          //mean some peek is the greatest
-          greatest=st.peek()[1];
-
-          
-        }
-
-        st.push(new int[]{price,current});
-
-          ans=current-greatest;
-
-          current++;
 
 
-          return ans;
+        int ans= index-st.peek().index;
 
+        st.push(new Pair(price,index));
+        index++;
 
+        return ans ;
         
     }
 }
