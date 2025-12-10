@@ -34,22 +34,27 @@ class StockSpanner {
         
 
           
-        int ans= 0;
+        int ans;
+        int last_greatest;
         if(!st.isEmpty()){
 
-            int last_big_price=st.peek().index;
+            last_greatest=st.peek().index;
 
-            ans=index-last_big_price;
+            
 
         }else{
             //it si empty means teher si no bug last price so teh index should be out of array beginning which is -1
-           int last_big_price=-1;
-            ans=index-last_big_price;
+           
+          last_greatest=-1;
+
 
         }
-
+         ans = index-last_greatest;
         st.push(new Pair(price,index));
         index++;
+
+
+        
 
         return ans ;
         
