@@ -17,7 +17,7 @@ class Solution {
 
              long contribution = (count* (count+1))/2;
 
-             ans= (ans+contribution);
+             ans= (ans+contribution) %1000000007;
 
 
             }
@@ -25,7 +25,7 @@ class Solution {
 
         }
 
-        return (int)( ans%1000000007) ;
+        return  (int)ans ;
         
     }
 }
