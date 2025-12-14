@@ -33,17 +33,24 @@ class Solution {
             st.push(i);
         }
 
-        long sum = 0;
+       
 
-        // 🔹 Contribution of each element
-        for (int i = 0; i < n; i++) {
+       long sum =0;
 
-            long left = i - left_small[i];
-            long right = right_small[i] - i;
 
-            sum = (sum + arr[i] * left * right) % MOD;
-        }
+       for(int i=0;i<arr.length;i++){
+        int left= i-left_small[i];
+        int right= right_small[i]-i;
 
-        return (int) sum;
+         long  local_sum=  (long)arr[i] * left * right;
+        sum= (sum +  local_sum)%1000000007;
+       }
+
+
+       return (int) sum;
+
+
+
+
     }
 }
