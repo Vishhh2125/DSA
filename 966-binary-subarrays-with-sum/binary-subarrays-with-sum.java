@@ -1,29 +1,26 @@
 class Solution {
-    public int numSubarraysWithSum(int[] arr, int goal) {
 
+    // count subarrays with sum <= goal
+    private int atMost(int[] nums, int goal) {
+        if (goal < 0) return 0;
 
-        int sum=0;
-        int count=0;
+        int left = 0, sum = 0, count = 0;
 
-        Map <Integer,Integer> map = new HashMap<>();
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
 
-
-        map.put(0,1);
-
-        for(int i=0;i<arr.length;i++){
-            sum+=arr[i];
-
-            if(map.containsKey(sum-goal)){
-
-                count+=map.get(sum-goal);
+            while (sum > goal) {
+                sum -= nums[left++];
             }
 
-            map.put(sum,map.getOrDefault(sum,0)+1);
+            // BULK COUNT
+            count += right - left + 1;
         }
 
-
-
         return count;
-        
+    }
+
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return atMost(nums, goal) - atMost(nums, goal - 1);
     }
 }
