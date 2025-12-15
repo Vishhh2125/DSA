@@ -3,17 +3,17 @@ class Solution {
 
         HashMap<Integer ,Integer> map = new HashMap<>();
          int [] ans = new int[2];
-        for(int i =0;i<arr.length;i++){
+        for(int j =0;j<arr.length;j++){
              
-           if(map.containsKey(target-arr[i])){
+           if(map.containsKey(target-arr[j])){
 
-              ans[0]=i;
+              ans[0]=j;
 
-              ans[1]=map.get(target-arr[i]);
+              ans[1]=map.get(target-arr[j]);
             
 
            }
-           map.put(arr[i],i);
+           map.put(arr[j],j);
         }
        return ans ;
         
