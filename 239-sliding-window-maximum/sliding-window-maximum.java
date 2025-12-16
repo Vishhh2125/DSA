@@ -1,27 +1,56 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(
+
+       PriorityQueue<int[]> pq = new PriorityQueue<>(
             (a, b) -> Integer.compare(b[0], a[0]) // max-heap by value
-        );
+        );        
 
-        int n = nums.length;
-        int[] ans = new int[n - k + 1];
-        int idx = 0;
+        ArrayList<Integer> ans = new ArrayList<>();
 
-        for (int i = 0; i < n; i++) {
-            pq.offer(new int[]{nums[i], i});
 
-            // remove elements outside window
-            while (pq.peek()[1] <= i - k) {
-                pq.poll();
-            }
 
-            if (i >= k - 1) {
-                ans[idx++] = pq.peek()[0];
-            }
+          int i=0;
+
+        for(int j=0;j<nums.length;j++){
+
+             pq.add(new int[]{nums[j], j});
+
+
+             if(j-i+1==k){
+                //window size reaced k 
+
+                 while(!pq.isEmpty() && pq.peek()[1]<i){
+
+                    pq.poll();
+                 }
+
+                 ans.add(pq.peek()[0]);
+
+                 i++;
+             }
+
         }
 
-        return ans;
+
+
+
+        
+
+           
+
+
+          int [] ans1 = new int [ans.size()];
+
+          int c=0;
+
+          for(Integer num : ans){
+
+            ans1[c]=num;
+            c++;
+          }
+
+          return ans1;
+        
     }
 }
