@@ -1,42 +1,58 @@
 class Solution {
     public String removeKdigits(String num, int k) {
 
+       Deque<Character> st = new ArrayDeque<>();
 
-        StringBuilder st = new StringBuilder();
+        StringBuilder ans =  new StringBuilder();
 
-         int count=0;
+          int count=0;
 
         for(int i=0;i<num.length();i++){
 
-            while(st.length()!=0 && num.charAt(i)<st.charAt(st.length()-1)  && count<k ){
+           
 
-                st.deleteCharAt(st.length()-1);
-                count++;
 
-            }
+           while(!st.isEmpty()  && num.charAt(i)<st.peek() && count<k){
 
-            st.append(num.charAt(i));
-
-        }
-
-        while(count<k){
-
-            st.deleteCharAt(st.length()-1);
+            st.pop();
             count++;
+
+           }
+
+           st.push(num.charAt(i));
+
+
         }
 
 
-        int i=0;
-         
-        while(i<st.length()  && st.charAt(i)=='0') i++;
+
+      ///if ke removal not staisfied just remove form back as the currnet ahve all ellemennt in acesding 
+        while(!st.isEmpty() && count<k){
+
+            st.pop();
+            count++;
+
+        }
 
 
-        if(i==st.length()) return "0";
+        //check from first if there is any leading zero that shouldn't be there 
 
-        String ans = st.toString().substring(i);
+        while(!st.isEmpty()  && st.peekLast()=='0'){
 
 
-        return ans ;
+            st.removeLast();
+        }
+
+        for(Character ch :st){
+
+            ans.append(ch);
+        }
+
+
+        if(ans.length()==0) return "0";
+
+
+        return ans.reverse().toString();
         
     }
 }
