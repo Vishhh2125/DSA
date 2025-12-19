@@ -1,22 +1,32 @@
 class Solution {
     public int maxProfit(int[] arr) {
 
-        Deque<Integer> st = new ArrayDeque<>();
-         int profit=0;
-        for(int i=0;i<arr.length;i++){
-
-
-            while(!st.isEmpty()  && arr[i]<=st.peek()){
-                 
-                 st.pop();
-
+        int profit=0;
+        int buyed=-1;
+        for(int i=0;i<arr.length-1;i++){
+            
+         if(arr[i]>=arr[i+1] ){
+            //sell it 
+            if(buyed!=-1){
+            profit+=arr[i]-buyed;
+            buyed=-1;
             }
 
-           profit+= st.isEmpty() ? 0 : arr[i]-st.peek();  ;
-           //you book the profit just clear the array 
-           st.clear();
+         }else{
+            //price is going to increase
 
-           st.push(arr[i]); 
+            if(buyed==-1){
+                //prices is going to increase 
+                buyed=arr[i];
+            }
+         }
+
+        }
+
+        if(buyed!=-1){
+
+            //sell on last price 
+            profit+=arr[arr.length-1]-buyed;
         }
 
         return profit;
