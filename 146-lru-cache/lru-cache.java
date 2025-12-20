@@ -1,96 +1,114 @@
 class LRUCache {
 
-    private Node head;
-    private Node tail;
-    private int size;
-    private int capacity;
-    private HashMap<Integer, Node> map;
+       Node head;
+       Node tail;
+       int capacity;
+       int size;
+     HashMap<Integer,Node> map;
 
-    LRUCache(int capacity) {
-        this.capacity = capacity;
-        tail = new Node(-1, -1);
-        head = new Node(-1, -1);
 
-        tail.prev = head;
-        head.next = tail;
-        map = new HashMap<>();
-    }
-
-    private class Node {
+    class Node {
         int val;
-        int key;
+        int key ;
         Node next;
-        Node prev;
+        Node pre;
 
-        public Node(int key, int val) {
-            this.next = null;
-            this.prev = null;
-            this.val = val;
-            this.key = key;
+
+        Node(int key,int val){
+            this.key=key;
+            this.val=val;
+            this.next=null;
+            this.pre=null;
         }
     }
 
-    Node addHead(int key, int val, Node current) {
-        if (current == null) {
-            // New node
-            Node temp = new Node(key, val);
-            temp.next = head.next;
-            head.next = temp;
-            temp.next.prev = temp;
-            temp.prev = head;
-            size++;
-            return temp;
-        } else {
-            // Update value
-            current.val = val;
+    public LRUCache(int capacity) {
 
-            // Detach from current position
-            current.prev.next = current.next;
-            current.next.prev = current.prev;
+        this.capacity=capacity;
+        head= new Node(0,0);
+        tail=new Node(0,0);
+        head.next = tail;
+         tail.pre = head;
+        map= new HashMap<>();
+        size=0;
 
-            // Add to head
-            current.next = head.next;
-            head.next = current;
-            current.next.prev = current;
-            current.prev = head;
-            return current;
-        }
+        
     }
 
-    Node deleteLast() {
-        Node current = tail.prev;
 
-        current.prev.next = tail;
-        tail.prev = current.prev;
-        size--;
+    public void addToHead(Node node ){
 
-        return current; // return full node so we get key
+        Node  head_next=head.next;
+         node.pre=head;
+         node.next=head.next;
+         head.next=node;
+         head_next.pre=node;
+
+
     }
-
-   
-
+    
     public int get(int key) {
-        Node current = map.get(key);
 
-        if (current == null) {
-            return -1;
-        } else {
+        if(map.containsKey(key)){
+            Node node =map.get(key);
+            //remove from the position 
+            node.pre.next=node.next;
+            node.next.pre=node.pre;
+            node.next=null;
+            node.pre=null;
+
+            addToHead(node);
+            return node.val;
+        }else return -1;
             
-            Node newNode = addHead(current.key, current.val, current);
-            map.put(key, newNode); // re-update in map
-            return current.val;
-        }
+        
     }
-
+    
     public void put(int key, int value) {
-        Node current = map.get(key);
 
-        if (size == capacity && current == null) {
-            Node last = deleteLast();
-            map.remove(last.key);
+       if(map.containsKey(key)){
+
+        //remove and add to teh head 
+
+         Node node = map.get(key);
+         node.pre.next=node.next;
+         node.next.pre=node.pre;
+         node.pre=null;
+         node.next=null;
+        node.val=value; //update teh value 
+        
+         //add to head 
+        addToHead(node); //add to head
+       }else{
+         
+        if(size==capacity){
+            //remove form tail 
+
+            Node node = tail.pre;
+            node.pre.next=node.next;
+            node.next.pre=node.pre;
+            node.pre=null;
+            node.next=null;
+            map.remove(node.key);
+            size--;
+
         }
 
-        Node newNode = addHead(key, value, current);
-        map.put(key, newNode);
+        Node node = new Node(key,value);
+        map.put(key,node);
+         addToHead(node); //add to head 
+       
+         size++;
+
+
+       }
+        
     }
 }
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
