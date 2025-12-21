@@ -1,55 +1,57 @@
 class Solution {
     public int[] asteroidCollision(int[] arr) {
-        
-
-       int n= arr.length;
-       Stack<Integer> st = new Stack<>();
 
 
-       for(int i=0;i<n;i++){
+        Deque<Integer> st = new ArrayDeque<>();
+         ArrayList<Integer> negative_asteroid= new ArrayList<>();
 
-        boolean flag=false;
+        for(int i=0;i<arr.length;i++){
 
-        while(!st.isEmpty() ){
+            if(arr[i]>0){
 
-            if(st.peek() > 0 && arr[i] < 0){
-                //opp sign 
+                st.push(arr[i]);
 
-                if(Math.abs(st.peek())>Math.abs(arr[i])){
-                    flag=true;
-                    break;
-                }else if(Math.abs(st.peek())<Math.abs(arr[i])){
-                    //peek one destppryed
-                    st.pop();
-                }else{
-                    //both are destorryed 
-
-                    st.pop();
-                    flag=true;
-                    break;
-                }
             }else{
-                //no opp sign
-                flag=false;
-                break;
+
+                while(!st.isEmpty()  && st.peek()<Math.abs(arr[i])){
+                    st.pop();
+                }
+
+                if(st.isEmpty())  negative_asteroid.add(arr[i]);//survided negative astriod 
+                else if(st.peek()==Math.abs(arr[i])){
+                    //destory both 
+                    st.pop();
+                }
+                
+
+
+                
             }
-
         }
-
-        if(flag==false){
-            st.push(arr[i]);
-        }
-
-       }
-       
-        int n1=st.size();
-       int[] ans = new int[n1];
-
-       for(int i =n1-1;i>=0;i--){
-        ans[i]=st.pop();
         
-       }
-     return ans;
 
+         int len= st.size()+negative_asteroid.size();
+
+        int [] ans = new int [len];
+
+
+
+        int i=0;
+
+
+        while(negative_asteroid.size()!=0){
+
+            ans[i]=negative_asteroid.remove(0);
+            i++;
+        }
+
+        while(!st.isEmpty()){
+            ans[i]=st.removeLast();
+            i++;
+        }
+
+
+        return ans ;
+        
     }
 }
