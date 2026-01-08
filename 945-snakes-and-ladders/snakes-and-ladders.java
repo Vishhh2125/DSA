@@ -17,7 +17,8 @@ class Solution {
      HashMap<Integer,Integer>  map = new HashMap<>();
        boolean flag=true;
        int count=1;
-       //create teh mapping of snakes and ladder from which count 
+
+       //1]create teh mapping of snakes and ladder from which count 
     for(int i =m-1;i>=0;i--){
 
 
@@ -42,7 +43,7 @@ class Solution {
         }
     }
 
-    //creating the gaprh from 1 to n* n 
+    //2]creating the gaprh from 1 to n* n 
 
     for(int vertex=1;vertex<=m*m;vertex++){
 
@@ -53,11 +54,11 @@ class Solution {
             }
         }
     }
-
+     //3]bfs traversal 
     //now do bf trversal using adj,visited of M*M  for vertex array and Queue
 
      boolean [] visited= new boolean [(m*m)+1];
-     visited[0]=true; //as this zero based is not there 
+     //as this zero based is not there 
      Deque<Integer> q= new ArrayDeque<>();
 
     //start form 1 
