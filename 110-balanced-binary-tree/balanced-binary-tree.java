@@ -14,23 +14,35 @@
  * }
  */
 class Solution {
+   public class Pair{
+    boolean flag;
+    int height;
 
-    public static  int height(TreeNode current){
+    Pair(boolean f ,int h){
+        this.flag=f;
+        this.height=h;
+    }
+   }
+    public Pair solution(TreeNode root){
 
-        if(current==null)  return 0;
+        if(root==null) return new Pair(true,0);
 
+         Pair left = solution(root.left);
+         Pair right =solution(root.right);
 
-        return 1+Math.max(height(current.left),height(current.right));
+         int diff = Math.abs(left.height-right.height);
+
+         boolean flag =true;
+         int height = 1+Math.max(left.height,right.height);
+         flag = left.flag && right.flag && diff<=1;
+          
+         return new Pair(flag,height);
     }
     public boolean isBalanced(TreeNode root) {
 
+    Pair ans = solution(root);
 
-        if(root==null)  return true;
-
-        int diff= Math.abs(height(root.left)-height(root.right));
-
-        return diff<=1 && isBalanced(root.left) && isBalanced(root.right) ;
-
+    return ans.flag ;
         
     }
 }
