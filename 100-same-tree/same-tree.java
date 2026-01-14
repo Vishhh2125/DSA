@@ -15,16 +15,29 @@
  */
 class Solution {
 
-    public static boolean solution(TreeNode current1,TreeNode current2){
-        if(current1==null && current2==null)  return true ; //both are null
-        else if(current1==null || current2==null)   return false;
-        else if(current1.val!=current2.val)  return false;  //two values are not teu justg return false 
-        else{
-          //both values right move to next node checkf rom left and right 
-          return solution(current1.left,current2.left)  && solution(current1.right,current2.right);
+    public boolean solution(TreeNode root1,TreeNode root2){
+
+        if(root1 ==null && root2==null)  return true; //base case  //until end the brach is same 
+        if(root1==null || root2==null)  return false ; //one of tehb nrach is over but stil ther i remaining means noot identical
+
+        //real core funtionality 
+
+        if(root1.val!=root2.val)return false;
+        else{ 
+            //until noe rigth search for depth 
+
+          return solution(root1.left ,root2.left) &&   solution(root1.right,root2.right) ;
+
+          //OTHER METHOD WHIHC IS SAME AS ABOVE 
+        // boolean left = solution(root1.left ,root2.left) ;
+        //   if(left){
+        //     solution(root1.right,root2.right)
+        // }
+
+
+
+         
         }
-        
-        
     }
     public boolean isSameTree(TreeNode p, TreeNode q) {
 
