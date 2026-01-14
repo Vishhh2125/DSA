@@ -14,75 +14,47 @@
  * }
  */
 class Solution {
-
-    
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-
 
         if(root==null)  return new ArrayList<>();
 
 
-        Deque<TreeNode> queue = new ArrayDeque<>();
-        
-           queue.add(root);
+          List<List<Integer>> result = new ArrayList<>();
 
-           boolean flag= true; // truue means left to right 
+        Deque<TreeNode> q= new ArrayDeque<>();
+         
+         boolean flag =true;
+           q.offer(root);
+         while(!q.isEmpty()){
 
-           List<List<Integer>>  ans= new ArrayList<>();
+            int size= q.size();
+            List<Integer> ans = new ArrayList<>();
 
-           while(!queue.isEmpty()){
-             //size of currrent queue is the elelmnt in that level
-             int size= queue.size();
+            for(int i=0;i<size;i++){
 
-             List<Integer> temp_ans=new ArrayList<>(); // to store level values
-
-
-
-            
-
-
-
-                        for(int i=0;i<size;i++){
+                TreeNode current = q.poll();
+                ans.add(current.val);
+                if(current.left!=null)  q.offer(current.left);
+                if(current.right!=null) q.offer(current.right);
+            }
 
 
-                            TreeNode current= queue.poll();
+            if(flag==false){
+                //reverse
+                Collections.reverse(ans);
+                
+            }
 
-                            temp_ans.add(current.val);
-
-
-                            if (current.left != null) {
-                            queue.add(current.left);
-                            }
-
-                            if (current.right != null) {
-                            queue.add(current.right);
-
-                            }
+            result.add(ans);
+            flag=!flag;
 
 
-                        }
+           
 
 
+         }
 
-                if(flag==false){
-                    Collections.reverse(temp_ans);
-                }
-
-
-                ans.add(temp_ans);
-             
-
-             flag=!flag;
-
-             
-
-           }
-
-
-
-
-
-      return ans ;
+         return result ;
         
     }
 }
