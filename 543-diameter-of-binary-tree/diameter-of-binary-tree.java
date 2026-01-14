@@ -29,7 +29,7 @@ class Solution {
     }
     public int diameterOfBinaryTree(TreeNode root) {
 
-        int height= height(root);
+         height(root);  //no need to colect heog as it is useless we need amx heigth which is declared at class scope 
 
         return max;
         
