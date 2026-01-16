@@ -14,74 +14,35 @@
  * }
  */
 class Solution {
-
-     public static class Pair{
-
-        TreeNode node ;
-
-       int row;
-
-
-       Pair(TreeNode node ,int row){
-        this.node=node;
-        this.row=row;
-       }
-
-        
-     }
     public List<Integer> rightSideView(TreeNode root) {
 
-    
+        if(root==null) return new ArrayList<>();
 
-        List<Integer> ans = new ArrayList<>();
+       TreeMap<Integer,Integer> map  = new TreeMap<>();
 
-        TreeMap<Integer,Integer> map = new TreeMap<>();
+       Deque<TreeNode> q= new ArrayDeque<>();
         
-        Deque<Pair>  q = new ArrayDeque<>();
+        q.add(root);
+        int level =0;
 
-        if(root==null)  return ans ;
+       while(!q.isEmpty()){
 
-
-        q.add( new Pair(root,0));
-
-
-        while(!q.isEmpty()){
-         
-
-         int size = q.size();
-
-         for(int i=0;i<size;i++){
-
-             Pair current = q.poll();
+        int size=q.size();
 
 
-            //current node execution 
-            
+        for(int i=0;i<size;i++){
+            TreeNode current =q.poll();
+            map.put(level,current.val);
 
-            map.put(current.row,current.node.val);
-
-            if(current.node.left!=null)  q.add(new Pair(current.node.left,current.row+1));
-             if(current.node.right!=null)  q.add( new Pair(current.node.right,current.row+1));
-
-
-         }
-
-           
+            if(current.left!=null) q.offer(current.left);
+            if(current.right!=null) q.offer(current.right);
         }
 
-        for(Integer ans_num : map.values()){
+         level++;
+       }
 
-            ans.add(ans_num);
-        }
-
-        return ans ;
-
-
-
-
-
-
-         
+         List<Integer> ans = new ArrayList<>(map.values());
+       return ans ;
         
     }
 }
