@@ -1,71 +1,59 @@
 /*
 class Node {
     int data;
-    Node left, right;
+    Node left;
+    Node right;
 
-    Node(int val) {
-        this.data = val;
-        this.left = null;
-        this.right = null;
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
     }
 }
 */
 
 class Solution {
     
-    public static class  Pair {
-        
-        Node  node;
-        int col;
-        
-        Pair(Node  node,int col){
-            this.node=node;
-            this.col=col;
-        }
-        
-        
+    public class Pair{
+         Node node;
+         int col;
+         
+         Pair(Node n , int c ){
+             this.node=n;
+             this.col=c;
+         }
     }
-    public ArrayList<Integer>  bottomView(Node root) {
+    public ArrayList<Integer> bottomView(Node root) {
         // code here
+                TreeMap<Integer,Integer> map = new TreeMap<>();
+          Deque<Pair> q= new ArrayDeque<>();
         
-        ArrayList<Integer> ans = new ArrayList<>();
-        Deque <Pair>  queue = new ArrayDeque<>();
+        q.offer(new Pair(root,0));
         
-        TreeMap<Integer,Integer>  map = new TreeMap<>();
         
-        queue.add( new Pair(root,0));
-        while(!queue.isEmpty()){
+        while(!q.isEmpty()){
+            
+            Pair current =q.poll();
+            
+            Node node =current.node;
+            int col=current.col;
+            
+            //always add in map if there exist alredy it will replace it and we will get the last 
+             //     nodes from each level
+                map.put(col,node.data);
             
             
-            int size= queue.size();
-            
-            for(int i =0;i<size;i++){
-                
-              Pair current = queue.poll();
-              
-              //operation on current node 
-              
-               // here just add the cola nd its values and at the end the last vealue will be replced with the bottom
-                  map.put(current.col,current.node.data);
-              
-              
-              if(current.node.left!=null)  queue.add( new Pair(current.node.left,current.col-1));
-              
-              if(current.node.right!=null)  queue.add( new Pair(current.node.right,current.col+1));
-              
-              
-            }
-        }
-        
-        
-        
-        for(Integer num :map.values()){
+            if(node.left!=null)     q.offer(new Pair(node.left,col-1));
+            if(node.right!=null)   q.offer(new Pair(node.right,col+1));
             
             
-            ans.add(num);
+             
             
             
         }
+        
+        ArrayList<Integer> ans= new ArrayList<>(map.values());
+        
         
         return ans ;
     }
