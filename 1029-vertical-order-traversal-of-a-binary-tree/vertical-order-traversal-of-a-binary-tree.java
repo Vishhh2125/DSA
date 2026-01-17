@@ -1,7 +1,7 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
+ *     int val; 
  *     TreeNode left;
  *     TreeNode right;
  *     TreeNode() {}
@@ -14,74 +14,84 @@
  * }
  */
 class Solution {
-    public static class  Pair{
 
-        int val;
+    public class  Pair{
+        TreeNode node;
         int row;
+        int col;
 
-        Pair(int val,int row){
-            this.row=row;
-            this.val=val;
+
+        Pair(TreeNode n  ,int r,int c ){
+            this.node =n;
+            this.row=r;
+            this.col=c;
+
         }
-    }
-    public static void solution(TreeNode current,int col,int row,TreeMap<Integer,List<Pair>>map){
-        if(current==null)  return;
-        
-
-
-          //left
-        solution(current.left,col-1,row+1,map);
-
-
-        //print 
-        if(map.containsKey(col)){
-            //if column key already present 
-            map.get(col).add(new Pair(current.val,row));
-        }else{
-             // if column key nor present cerate arraylist instance and add it with value 
-            List<Pair> list= new ArrayList<>();
-             list.add( new Pair(current.val,row));
-
-             map.put(col,list);
-        }
-
-
-        // right 
-        solution(current.right,col+1,row+1,map); //right 
-    }
+    } 
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-     
 
-     List<List<Integer>> ans = new ArrayList<>();
+      
+         List<List<Integer>>  result= new ArrayList<>();
 
-     TreeMap<Integer,List<Pair>> map = new TreeMap<>();
-
-
-     solution(root,0,0,map);
-
-
-     for(Integer key :map.keySet()){
+         Deque<Pair> q= new ArrayDeque<>();
         
+         TreeMap<Integer,List<Pair>> map = new TreeMap<>();
+                //col  Pair 
+           q.offer(new Pair(root,0,0));
 
-        List<Pair> list  = map.get(key);
-        Collections.sort(list,(a,b)->{
+          while(!q.isEmpty()){
+            int size=q.size();
+
+           for(int i=0;i<size;i++){
+            Pair current =q.poll();
+            TreeNode node =current.node;
+            int row=current.row;
+            int col=current.col;
             
-            if(a.row==b.row)  return a.val-b.val;
-            else  return a.row-b.row;
-        });
+            if(map.containsKey(col)){
+                List<Pair> list =map.get(col);
+                list.add(current);
+                map.put(col,list);
 
-          List<Integer> ans_sublist = new ArrayList<>();
-        for(Pair p:list){
+            }else{
+
+                List<Pair> list=  new ArrayList<>();
+                list.add(current);
+                map.put(col,list);
+            }
+
+            if(node.left!=null) q.offer(new Pair(node.left,row+1,col-1));
+            if(node.right!=null)  q.offer(new Pair(node.right,row+1,col+1));
+
+           }
+
+          }
+
+
+        for(List<Pair> list : map.values()){
+          Collections.sort(list,(a,b)->{
+            if(a.row==b.row) return a.node.val-b.node.val;
+
+            return a.row-b.row;
+
+          });
+
+           List<Integer> ans = new ArrayList<>();
+          for(Pair p : list){
+            ans.add(p.node.val);
+        
+          }
+
+
+          result.add(ans);
+
           
-          ans_sublist.add(p.val);
 
         }
 
-        ans.add(ans_sublist);
-     }
+      
+         return result;
 
-        
-    return ans ;
-        
+
     }
 }
