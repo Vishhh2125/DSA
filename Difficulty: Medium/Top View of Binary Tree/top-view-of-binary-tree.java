@@ -10,64 +10,55 @@ class Node {
     }
 }
 */
-
 class Solution {
     
-    public static class  Pair {
-        
-        Node  node;
-        int col;
-        
-        Pair(Node  node,int col){
-            this.node=node;
-            this.col=col;
-        }
-        
-        
+    public class Pair{
+         Node node;
+         int col;
+         
+         Pair(Node n , int c ){
+             this.node=n;
+             this.col=c;
+         }
     }
     public ArrayList<Integer> topView(Node root) {
         // code here
         
-        ArrayList<Integer> ans = new ArrayList<>();
-        Deque <Pair>  queue = new ArrayDeque<>();
+        TreeMap<Integer,Integer> map = new TreeMap<>();
+          Deque<Pair> q= new ArrayDeque<>();
         
-        TreeMap<Integer,Integer>  map = new TreeMap<>();
+        q.offer(new Pair(root,0));
         
-        queue.add( new Pair(root,0));
-        while(!queue.isEmpty()){
+        
+        while(!q.isEmpty()){
             
+            Pair current =q.poll();
             
-            int size= queue.size();
+            Node node =current.node;
+            int col=current.col;
             
-            for(int i =0;i<size;i++){
-                
-              Pair current = queue.poll();
-              
-              //operation on current node 
-              
-              if(!map.containsKey(current.col)){
-                  
-                  map.put(current.col,current.node.data);
-              }
-              
-              if(current.node.left!=null)  queue.add( new Pair(current.node.left,current.col-1));
-              
-              if(current.node.right!=null)  queue.add( new Pair(current.node.right,current.col+1));
-              
-              
+            //add to map only if the col dont have any value in map 
+            
+            if(!map.containsKey(col)){
+                map.put(col,node.data);
             }
+            
+            if(node.left!=null)     q.offer(new Pair(node.left,col-1));
+            if(node.right!=null)   q.offer(new Pair(node.right,col+1));
+            
+            
+             
+            
+            
         }
         
+        ArrayList<Integer> ans= new ArrayList<>(map.values());
         
-        
-        for(Integer num :map.values()){
-            
-            
-            ans.add(num);
-            
-            
-        }
         
         return ans ;
+        
+        
+        
+        
     }
 }
