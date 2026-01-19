@@ -8,25 +8,21 @@
  * }
  */
 class Solution {
-    public TreeNode solution(TreeNode current,TreeNode p ,TreeNode q){
+    public TreeNode lowestCommonAncestor(TreeNode current, TreeNode p, TreeNode q) {
 
-        if(current==null)  return null;
-        if(current==q || current==p)  return current;
+        if(current==null) return null;
 
 
-        TreeNode left= solution(current.left,p,q);
-        TreeNode right= solution(current.right,p,q);
+        TreeNode left =lowestCommonAncestor(current.left,p,q);
+        TreeNode right=lowestCommonAncestor(current.right,p,q);
 
-        if(left==null && right==null)  return null;
 
-        else if(left!=null  && right!=null)  return current;
+        if(current==p || current==q) return current; //latest lca ;
+        else if(left==null && right==null) return null;
+        else if(left!=null && right!=null) return current;
+        else if(left==null && right!=null) return right;
+         else return left;
 
-        else if(left!=null && right==null)  return left;
-        else return right ;
-    }
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-
-        return solution(root,p,q);
         
     }
 }
