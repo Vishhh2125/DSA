@@ -14,64 +14,49 @@
  * }
  */
 class Solution {
-    public static class Pair {
+    public class Pair{
         TreeNode node;
-        int i;
+        int index;
 
-        Pair(TreeNode node ,int i ){
-            this.node= node;
-            this.i=i;
 
+        Pair(TreeNode node,int index){
+            this.node=node;
+            this.index=index;
         }
-
-
     }
     public int widthOfBinaryTree(TreeNode root) {
 
-        
-        Queue<Pair>  queue = new LinkedList<>();
-         int max=0;
-        queue.add(new Pair(root,1));
+        int max=0;
 
-        while(!queue.isEmpty()){
-            int size= queue.size();
-            
+        Queue<Pair> q= new LinkedList<>();
 
-            int first_index= queue.peek().i;
-             int  last_index= 0;
+        q.offer(new Pair(root,1));
+
+        while(!q.isEmpty()){
+
+            int size=q.size();
+
+             int first_index=q.peek().index;
+             int last_index=q.peek().index;;
             for(int i=0;i<size;i++){
+                Pair current=q.poll();
+                 last_index=current.index;
+                
 
-                Pair current=queue.poll();
-                 last_index=current.i;
+                 if(current.node.left!=null) q.offer(new Pair(current.node.left,2*current.index)); 
+                 if(current.node.right!=null) q.offer(new Pair(current.node.right,2*current.index+1));
+
+                
 
 
-                 //insert eh future child and tehre index 
-                if(current.node.left!=null){
-                     //so the index for right child is 2*i
-                    queue.add(new Pair (current.node.left, 2 * current.i));
-                }
+             }
 
-                if(current.node.right!=null){
-                    //so the index for right child is 2*i+1
-                    queue.add(new Pair (current.node.right,(2 * current.i)+1));
-                }
 
-            }
-
-            //now we will get the last index which will be the last node in that level 
-
-            int  width= last_index-first_index+1;
-            max=Math.max(max,width);
-
-            
-
-            
+             max=Math.max(max,last_index-first_index+1);
         }
 
 
         return max;
-
-
-
+        
     }
 }
