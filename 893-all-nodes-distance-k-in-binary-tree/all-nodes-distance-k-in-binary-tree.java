@@ -8,73 +8,82 @@
  * }
  */
 class Solution {
-
-
-    public static void dfs(TreeNode current,HashMap<TreeNode,TreeNode> map){
-        if(current==null)  return ;
-
-
-          if(current.left!=null){
-            map.put(current.left,current);
-          }
-          if(current.right!=null){
-         map.put(current.right,current);
-          }
-
-          dfs(current.left,map);
-          dfs(current.right,map);
-
-
-
-    }
-
-    
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
 
-
-        Queue<TreeNode> q= new LinkedList<>();
-        List<Integer> ans = new ArrayList<>();
-        HashMap<TreeNode,TreeNode> map= new HashMap<>();
+        HashMap<TreeNode,TreeNode> map = new HashMap<>();
+        
+        Deque<TreeNode> q= new ArrayDeque<>();
+        
         Set<TreeNode> set = new HashSet<>();
 
-        dfs(root,map); // add all the nodes parent 
+         
+        q.offer(root);
+       
 
-
-        q.add(target);
-         int level=0;
-        
+       //store hashmap with mapping parent 
         while(!q.isEmpty()){
 
-            int size=q.size();
-
-            for(int i=0;i<size;i++){
-                 TreeNode current=q.poll(); //this si curreny node 
-                  set.add(current); // this node iws visted
-                if(level==k){
-                    ans.add(current.val);
-
-                }
-
-
-                if(current.left!=null && !set.contains(current.left))  q.add(current.left); //add left
-                if(current.right!=null && !set.contains(current.right)) q.add(current.right);// add right 
-                if(map.containsKey(current) && !set.contains(map.get(current)))  q.add(map.get(current));  //add parent 
-
-
-
-
-
-            }
-
+            TreeNode current = q.poll();
             
 
-            level++;
+            if(current.left!=null){
+
+                map.put(current.left,current);
+                q.offer(current.left);
+            }
+
+             if(current.right!=null){
+
+                map.put(current.right,current);
+                q.offer(current.right);
+            }
+        }
+
+
+        //now 
+        q.clear();
+
+        q.offer(target); 
+         set.add(target); //mark visited   
+        int count=0;
+        while(!q.isEmpty() && count<k){
+
+            int size=q.size();
+           
+        
+            for(int i=0;i<size;i++){
+                  TreeNode current = q.poll();
+
+                  if(current.left!=null && !set.contains(current.left)){
+                     q.offer(current.left);
+                     set.add(current.left);
+                  }
+                   if(current.right!=null && !set.contains(current.right)) 
+                   { 
+                    q.offer(current.right);
+                    set.add(current.right);
+                   }
+                   //also add parent if there 
+                   if(map.containsKey(current) && !set.contains(map.get(current))){
+                    q.offer(map.get(current));
+                    set.add(map.get(current));
+                   }
+
+            }
+            count++;
+
 
 
         }
 
-        return ans ;
+        List<Integer> ans = new ArrayList<>();
 
+        while(!q.isEmpty()){
+            ans.add(q.poll().val);
+        }
+     
+
+     return ans ;
 
         
     }
