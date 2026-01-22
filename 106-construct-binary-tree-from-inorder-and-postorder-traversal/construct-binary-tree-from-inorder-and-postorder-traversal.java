@@ -15,34 +15,38 @@
  */
 class Solution {
 
-    public int postindex;  // it tellls which is teh root in inorder range given 
+    int postIndex=0;
 
-    public TreeNode construct(int start ,int end ,int[] inorder,int []postorder){
-        if(start>end)  return null ;
-        //build node 
+    public TreeNode helper(int[] inorder, int[] postorder,int i,int j ){
 
-        TreeNode root = new TreeNode(postorder[postindex]);
-        postindex--;
-          int inindex=start;
-        while(inindex<=end){
+        if(i>j) return null;
 
-            if(inorder[inindex]==root.val) break; //this is the current root index in inorder we want 
-            inindex++;
+       int  root_num=postorder[postIndex--];
+        TreeNode root= new TreeNode(root_num);
+
+        int k=i;
+
+        for(;k<=j;k++){
+            if(inorder[k]==root_num)break;
+
         }
 
-        root.right=construct(inindex+1,end,inorder,postorder);
-        root.left= construct(start,inindex-1,inorder,postorder);
-
+        root.right=helper(inorder,postorder,k+1,j); //first call right bcz the next postorder index num is in rigth side of inorder root  not in left side of root
+        root.left=helper(inorder,postorder,i,k-1);
 
         return root;
-        
 
-       
+
 
     }
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-        postindex=postorder.length-1;
-        return construct(0,inorder.length-1,inorder,postorder);
+
+        postIndex=postorder.length-1;
+
+        return helper(inorder,postorder,0,inorder.length-1);
+
+
+
         
     }
 }
