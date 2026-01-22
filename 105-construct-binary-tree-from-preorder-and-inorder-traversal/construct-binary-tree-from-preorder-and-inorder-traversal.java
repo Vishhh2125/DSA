@@ -14,49 +14,35 @@
  * }
  */
 class Solution {
-    
 
-    public  int preindex =0;
+    int preIndex=0;
+     public TreeNode helper(int[] preorder, int[] inorder,int i,int j){
+        if(i>j)  return null;
+        
 
-    public  TreeNode construct(int start ,int end,int[] preorder ,int[] inorder){
+        int root_num=preorder[preIndex++];
+        
 
-        if(  start>end)  return null;  
+        TreeNode root=new TreeNode(root_num);
+         int k=i;
+        for(;k<=j;k++){
+            if(inorder[k]==root_num) break;
 
-        TreeNode current= new TreeNode(preorder[preindex]); //cretae new node now created it left and right 
-        preindex++;
-
-         int root_index=start;
-        while(root_index<=end){
-
-            if(inorder[root_index]==current.val){
-               
-               break;
-            }
-
-            root_index++;
+            
         }
 
+        root.left=helper(preorder,inorder,i,k-1);
+        root.right=helper(preorder,inorder,k+1,j);
 
+        return root;
 
-        current.left= construct(start,root_index-1,preorder,inorder);
-        
-        current.right= construct(root_index+1,end,preorder,inorder);
-
-        
-
-
-        return current;
-
-        
-
-
-    }
+     }
     public TreeNode buildTree(int[] preorder, int[] inorder) {
 
 
-        return construct(0,inorder.length-1,preorder,inorder);
+        return helper(preorder,inorder,0,inorder.length-1);
 
-
+        
         
     }
 }
