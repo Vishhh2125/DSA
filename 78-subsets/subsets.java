@@ -1,34 +1,29 @@
 class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
 
-    public static void solution(int index,int[] input ,List<Integer>  output,List<List<Integer>> ans){
 
-        if(input.length==index){
+        List<List<Integer>> ans= new ArrayList<>();
 
-            ans.add(new ArrayList<>(output));
-            return ;
+        int  n =(int)Math.pow(2,nums.length);
+         
+        for(int i=0;i<n;i++){
+              int num=i;
+              List<Integer> list = new ArrayList<>();
+            for(int j=nums.length-1;j>=0;j--){
+
+                if(num%2==1){
+                   list.add(nums[j]);
+
+                }
+                num=num>>1;
+
+            }
+             Collections.reverse(list);
+            ans.add(list);
         }
 
-        
- 
-        output.add(input[index]);//include the number 
 
-        solution(index+1,input,output,ans);//added num for combination
-          output.remove(output.size()-1) ; //remove from teh last of the  list (backtrack)
-        solution(index+1,input,output,ans);//not added num
-
-
-
-
-        
-        
-    }
-    public List<List<Integer>> subsets(int[] arr) {
-
-        List<List<Integer>> ans = new ArrayList<>();
-     
-        solution(0,arr,new ArrayList<>(),ans);
-
-        return ans;
+        return ans ;
         
     }
 }
