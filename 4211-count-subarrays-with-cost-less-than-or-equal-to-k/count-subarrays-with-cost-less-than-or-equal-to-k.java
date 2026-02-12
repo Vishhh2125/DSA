@@ -1,43 +1,39 @@
 class Solution {
     public long countSubarrays(int[] nums, long k) {
 
+        Deque<Integer> NSE = new ArrayDeque<>(); // min deque
+        Deque<Integer> NGE = new ArrayDeque<>(); // max deque
 
-         PriorityQueue<int[]> minHeap =
-                new PriorityQueue<>((a, b) -> a[0] - b[0]);
-
-        PriorityQueue<int[]> maxHeap =
-                new PriorityQueue<>((a, b) -> b[0] - a[0]);
-         
-
-          int i = 0;
+        int i = 0;
         long ans = 0;
 
+        for (int j = 0; j < nums.length; j++) {
 
-         for (int j = 0; j < nums.length; j++) {
+            // Maintain increasing order for minimum
+            while (!NSE.isEmpty() && nums[j] <= nums[NSE.peekFirst()]) {
+                NSE.pollFirst();
+            }
+            NSE.offerFirst(j);
 
-              minHeap.offer(new int[]{nums[j], j});
-            maxHeap.offer(new int[]{nums[j], j});
+            // Maintain decreasing order for maximum
+            while (!NGE.isEmpty() && nums[j] >= nums[NGE.peekFirst()]) {
+                NGE.pollFirst();
+            }
+            NGE.offerFirst(j);
 
+            // Shrink window if cost > k
+            while (!NSE.isEmpty() && !NGE.isEmpty() &&
+                   (long)(nums[NGE.peekLast()] - nums[NSE.peekLast()]) * (j - i + 1) > k) {
 
+                if (NSE.peekLast() == i) NSE.pollLast();
+                if (NGE.peekLast() == i) NGE.pollLast();
 
-                while (minHeap.peek()[1] < i) minHeap.poll();
-                while (maxHeap.peek()[1] < i) maxHeap.poll();
+                i++;
+            }
 
+            ans += (j - i + 1);
+        }
 
-                while((long)(maxHeap.peek()[0] - minHeap.peek()[0]) * (j - i + 1) >k){
-
-                        i++;
-
-                    while (minHeap.peek()[1] < i) minHeap.poll();
-                    while (maxHeap.peek()[1] < i) maxHeap.poll();
-
-
-
-                }
-
-         ans += (j - i + 1);
-
-         }
-        return ans ;
+        return ans;
     }
 }
