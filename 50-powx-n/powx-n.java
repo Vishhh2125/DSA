@@ -1,25 +1,27 @@
 class Solution {
 
-    private double pow(double x, long n) {
-        if (n == 0) return 1.0;
+    public double helper(double x,int n ){
 
-        double half = pow(x, n / 2);
+        if(n==0)  return 1.0;
 
-        if (n % 2 == 0) {
-            return half * half;      // even
-        } else {
-            return half * half * x;  // odd
+            double  half=helper(x,n/2);
+
+        if(n%2==0){
+
+            return half*half;
+        }else{
+            return half * half * x;
         }
     }
-
     public double myPow(double x, int n) {
-        long N = n;  // convert to long to handle Integer.MIN_VALUE
 
-        if (N < 0) {
-            x = 1 / x;
-            N = -N;
+        if(n<0){
+            x=1/x;
+            n=-n;
         }
 
-        return pow(x, N);
+
+        return helper(x,n);
+        
     }
 }
