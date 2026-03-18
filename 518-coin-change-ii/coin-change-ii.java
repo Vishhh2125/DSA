@@ -1,22 +1,22 @@
 class Solution {
 
-    public int helper(int[] coins, int rem, int i, int[][] dp) {
+    public int helper(int[] coins, int rem, int start, int[][] dp) {
 
         if (rem == 0) return 1;
-        if (i == coins.length) return 0;
+        if (rem < 0) return 0;
 
-        if (dp[i][rem] != -1) return dp[i][rem];
+        if (dp[start][rem] != -1) return dp[start][rem];
 
-        int take = 0;
-        if (coins[i] <= rem) {
-            take = helper(coins, rem - coins[i], i, dp); // same index
+        int count = 0;
+
+        for (int i = start; i < coins.length; i++) {
+            count += helper(coins, rem - coins[i], i, dp); // use i
         }
 
-        int skip = helper(coins, rem, i + 1, dp); // move forward
-
-        return dp[i][rem] = take + skip;
+        return dp[start][rem] = count;
     }
 
+    // ✅ correct function name for THIS logic
     public int change(int amount, int[] coins) {
 
         int n = coins.length;
