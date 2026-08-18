@@ -5,6 +5,7 @@
 |  |
 | ------- |
 | [0460-lfu-cache](https://github.com/Vishhh2125/DSA/tree/master/0460-lfu-cache) |
+| [3471-find-the-largest-almost-missing-integer](https://github.com/Vishhh2125/DSA/tree/master/3471-find-the-largest-almost-missing-integer) |
 ## Linked List
 |  |
 | ------- |
@@ -21,6 +22,7 @@
 |  |
 | ------- |
 | [0239-sliding-window-maximum](https://github.com/Vishhh2125/DSA/tree/master/0239-sliding-window-maximum) |
+| [3471-find-the-largest-almost-missing-integer](https://github.com/Vishhh2125/DSA/tree/master/3471-find-the-largest-almost-missing-integer) |
 ## Queue
 |  |
 | ------- |
