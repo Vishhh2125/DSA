@@ -24,6 +24,7 @@
 | ------- |
 | [0239-sliding-window-maximum](https://github.com/Vishhh2125/DSA/tree/master/0239-sliding-window-maximum) |
 | [0435-non-overlapping-intervals](https://github.com/Vishhh2125/DSA/tree/master/0435-non-overlapping-intervals) |
+| [1277-count-square-submatrices-with-all-ones](https://github.com/Vishhh2125/DSA/tree/master/1277-count-square-submatrices-with-all-ones) |
 | [1463-cherry-pickup-ii](https://github.com/Vishhh2125/DSA/tree/master/1463-cherry-pickup-ii) |
 | [3471-find-the-largest-almost-missing-integer](https://github.com/Vishhh2125/DSA/tree/master/3471-find-the-largest-almost-missing-integer) |
 ## Queue
@@ -96,6 +97,7 @@
 |  |
 | ------- |
 | [0435-non-overlapping-intervals](https://github.com/Vishhh2125/DSA/tree/master/0435-non-overlapping-intervals) |
+| [1277-count-square-submatrices-with-all-ones](https://github.com/Vishhh2125/DSA/tree/master/1277-count-square-submatrices-with-all-ones) |
 | [1463-cherry-pickup-ii](https://github.com/Vishhh2125/DSA/tree/master/1463-cherry-pickup-ii) |
 ## Greedy
 |  |
@@ -108,5 +110,6 @@
 ## Matrix
 |  |
 | ------- |
+| [1277-count-square-submatrices-with-all-ones](https://github.com/Vishhh2125/DSA/tree/master/1277-count-square-submatrices-with-all-ones) |
 | [1463-cherry-pickup-ii](https://github.com/Vishhh2125/DSA/tree/master/1463-cherry-pickup-ii) |
 <!---LeetCode Topics End-->
